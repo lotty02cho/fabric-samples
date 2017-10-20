@@ -8,6 +8,7 @@
 export VERSION=${1:-1.0.0}
 export ARCH=$(echo "$(uname -s|tr '[:upper:]' '[:lower:]'|sed 's/mingw64_nt.*/windows/')-$(uname -m | sed 's/x86_64/amd64/g')" | awk '{print tolower($0)}')
 #Set MARCH variable i.e ppc64le,s390x,x86_64,i386
+#(MARCH 변수 설정, 즉 ppc64le, s390x, x86_64, i386)
 MARCH=`uname -m`
 
 dockerFabricPull() {

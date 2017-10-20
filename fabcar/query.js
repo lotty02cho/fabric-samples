@@ -5,7 +5,7 @@
 * SPDX-License-Identifier: Apache-2.0
 */
 /*
- * Hyperledger Fabric Sample Query Program
+ * Hyperledger Fabric Sample Query Program(Hyperledger 패브릭 샘플 쿼리 프로그램)
  */
 
 var hfc = require('fabric-client');
@@ -44,12 +44,14 @@ Promise.resolve().then(() => {
     console.log("Assigning transaction_id: ", transaction_id._transaction_id);
 
     // queryCar - requires 1 argument, ex: args: ['CAR4'],
+    // queryCar - 1 개의 argument가 필요합니다, ex: args: ['CAR4'],
     // queryAllCars - requires no arguments , ex: args: [''],
+    // queryAllCars - arguments가 필요 없습니다, ex: args: [''],
     const request = {
         chaincodeId: options.chaincode_id,
         txId: transaction_id,
-        fcn: 'queryAllCars',
-        args: ['']
+        fcn: 'queryCar',
+        args: ['CAR10']
     };
     return channel.queryByChaincode(request);
 }).then((query_responses) => {

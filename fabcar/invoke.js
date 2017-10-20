@@ -5,7 +5,7 @@
 * SPDX-License-Identifier: Apache-2.0
 */
 /*
- * Chaincode Invoke
+ * Chaincode Invoke(체인 코드 호출)
  */
 
 var hfc = require('fabric-client');
@@ -49,13 +49,15 @@ Promise.resolve().then(() => {
     tx_id = client.newTransactionID();
     console.log("Assigning transaction_id: ", tx_id._transaction_id);
     // createCar - requires 5 args, ex: args: ['CAR11', 'Honda', 'Accord', 'Black', 'Tom'],
+    // (createCar - 5 개의 args가 필요합니다)
     // changeCarOwner - requires 2 args , ex: args: ['CAR10', 'Barry'],
-    // send proposal to endorser
+    // (changeCarOwner - 2 개의 args가 필요합니다.)
+    // send proposal to endorser(endorser에게 제안서를 보냅니다.)
     var request = {
         targets: targets,
         chaincodeId: options.chaincode_id,
-        fcn: 'createCar',
-        args: ['CAR10', 'Chevy', 'Volt', 'Red', 'Nick'],
+        fcn: 'changeCarOwner',
+        args: ['CAR10', 'Barry'],
         chainId: options.channel_id,
         txId: tx_id
     };
@@ -83,8 +85,11 @@ Promise.resolve().then(() => {
             header: header
         };
         // set the transaction listener and set a timeout of 30sec
+        // (트랜잭션 리스너를 설정하고 30 초의 타임 아웃을 설정합니다.)
         // if the transaction did not get committed within the timeout period,
+        // (트랜잭션이 제한 시간 내에 커밋되지 않은 경우,)
         // fail the test
+        // (테스트 실패)
         var transactionID = tx_id.getTransactionID();
         var eventPromises = [];
         let eh = client.newEventHub();
@@ -118,7 +123,7 @@ Promise.resolve().then(() => {
         var sendPromise = channel.sendTransaction(request);
         return Promise.all([sendPromise].concat(eventPromises)).then((results) => {
             console.log(' event promise all complete and testing complete');
-            return results[0]; // the first returned value is from the 'sendPromise' which is from the 'sendTransaction()' call
+            return results[0]; // the first returned value is from the 'sendPromise' which is from the 'sendTransaction()' call(첫 번째 반환 값은 'sendTransaction ()'호출의 'sendPromise'에서 가져온 값입니다.)
         }).catch((err) => {
             console.error(
                 'Failed to send transaction and get notifications within the timeout period.'

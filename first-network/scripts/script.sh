@@ -19,7 +19,7 @@ ORDERER_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrga
 
 echo "Channel name : "$CHANNEL_NAME
 
-# verify the result of the end-to-end test
+# verify the result of the end-to-end test(엔드 투 엔드 테스트 결과 확인)
 verifyResult () {
 	if [ $1 -ne 0 ] ; then
 		echo "!!!!!!!!!!!!!!! "$2" !!!!!!!!!!!!!!!!"
@@ -87,7 +87,7 @@ updateAnchorPeers() {
 	echo
 }
 
-## Sometimes Join takes time hence RETRY atleast for 5 times
+## Sometimes Join takes time hence RETRY atleast for 5 times(때때로 가입하는 데 시간이 걸리므로, 적어도 5 번 이상 재시도 하십시오.)
 joinWithRetry () {
 	peer channel join -b $CHANNEL_NAME.block  >&log.txt
 	res=$?
@@ -129,6 +129,7 @@ instantiateChaincode () {
 	setGlobals $PEER
 	# while 'peer chaincode' command can get the orderer endpoint from the peer (if join was successful),
 	# lets supply it directly as we know it using the "-o" option
+	# ('peer chaincode'명령은 피어에서 주문자 엔드 포인트를 가져올 수 있지만 (join이 성공한 경우) "-o"옵션을 사용하여 직접 알 수있는 것처럼 직접 제공 할 수 있습니다.)
 	if [ -z "$CORE_PEER_TLS_ENABLED" -o "$CORE_PEER_TLS_ENABLED" = "false" ]; then
 		peer chaincode instantiate -o orderer.example.com:7050 -C $CHANNEL_NAME -n mycc -v 1.0 -c '{"Args":["init","a","100","b","200"]}' -P "OR	('Org1MSP.member','Org2MSP.member')" >&log.txt
 	else
@@ -148,8 +149,8 @@ chaincodeQuery () {
   local rc=1
   local starttime=$(date +%s)
 
-  # continue to poll
-  # we either get a successful response, or reach TIMEOUT
+  # continue to poll(계속 설문 조사)
+  # we either get a successful response, or reach TIMEOUT(우리는 성공적인 응답을 받거나 TIMEOUT에 도달합니다.)
   while test "$(($(date +%s)-starttime))" -lt "$TIMEOUT" -a $rc -ne 0
   do
      sleep $DELAY
@@ -175,6 +176,7 @@ chaincodeInvoke () {
 	setGlobals $PEER
 	# while 'peer chaincode' command can get the orderer endpoint from the peer (if join was successful),
 	# lets supply it directly as we know it using the "-o" option
+	# ('peer chaincode'명령은 피어에서 주문자 엔드 포인트를 가져올 수 있지만(join이 성공한 경우), "-o"옵션을 사용하여 직접 알 수있는대로 공급할 수 있습니다.)
 	if [ -z "$CORE_PEER_TLS_ENABLED" -o "$CORE_PEER_TLS_ENABLED" = "false" ]; then
 		peer chaincode invoke -o orderer.example.com:7050 -C $CHANNEL_NAME -n mycc -c '{"Args":["invoke","a","b","10"]}' >&log.txt
 	else
@@ -187,43 +189,43 @@ chaincodeInvoke () {
 	echo
 }
 
-## Create channel
+## Create channel(채널을 만듭니다.)
 echo "Creating channel..."
 createChannel
 
-## Join all the peers to the channel
+## Join all the peers to the channel(모든 피어를 채널에 가입시킵니다.)
 echo "Having all peers join the channel..."
 joinChannel
 
-## Set the anchor peers for each org in the channel
+## Set the anchor peers for each org in the channel(채널의 각 조직에 대한 앵커 피어를 설정합니다.)
 echo "Updating anchor peers for org1..."
 updateAnchorPeers 0
 echo "Updating anchor peers for org2..."
 updateAnchorPeers 2
 
-## Install chaincode on Peer0/Org1 and Peer2/Org2
+## Install chaincode on Peer0/Org1 and Peer2/Org2(Peer0 / Org1 및 Peer2 / Org2에 체인 코드를 설치하십시오.)
 echo "Installing chaincode on org1/peer0..."
 installChaincode 0
 echo "Install chaincode on org2/peer2..."
 installChaincode 2
 
-#Instantiate chaincode on Peer2/Org2
+#Instantiate chaincode on Peer2/Org2(Peer2 / Org2에서 체인 코드를 인스턴스화하십시오.)
 echo "Instantiating chaincode on org2/peer2..."
 instantiateChaincode 2
 
-#Query on chaincode on Peer0/Org1
+#Query on chaincode on Peer0/Org1(Peer0 / Org1의 체인 코드 쿼리를 보냅니다.)
 echo "Querying chaincode on org1/peer0..."
 chaincodeQuery 0 100
 
-#Invoke on chaincode on Peer0/Org1
+#Invoke on chaincode on Peer0/Org1(Peer0 / Org1에서 체인 코드를 호출하십시오.)
 echo "Sending invoke transaction on org1/peer0..."
 chaincodeInvoke 0
 
-## Install chaincode on Peer3/Org2
+## Install chaincode on Peer3/Org2(Peer3 / Org2에 체인 코드를 설치하십시오.)
 echo "Installing chaincode on org2/peer3..."
 installChaincode 3
 
-#Query on chaincode on Peer3/Org2, check if the result is 90
+#Query on chaincode on Peer3/Org2, check if the result is 90(Peer3 / Org2에서 체인 코드를 쿼리하여 결과가 90인지 확인하십시오.)
 echo "Querying chaincode on org2/peer3..."
 chaincodeQuery 3 90
 

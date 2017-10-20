@@ -12,6 +12,7 @@ services:
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
       # the following setting starts chaincode containers on the same
       # bridge network as the peers
+      # (다음 설정은 피어와 동일한 브리지 네트워크에서 chaincode 컨테이너를 시작합니다.)
       # https://docs.docker.com/compose/networking/
       - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=${COMPOSE_PROJECT_NAME}_byfn
       #- CORE_LOGGING_LEVEL=ERROR

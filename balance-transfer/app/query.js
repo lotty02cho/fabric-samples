@@ -29,7 +29,7 @@ var queryChaincode = function(peer, channelName, chaincodeName, args, fcn, usern
 	var target = buildTarget(peer, org);
 	return helper.getRegisteredUsers(username, org).then((user) => {
 		tx_id = client.newTransactionID();
-		// send query
+		// send query(쿼리를 보냅니다.)
 		var request = {
 			chaincodeId: chaincodeName,
 			txId: tx_id,

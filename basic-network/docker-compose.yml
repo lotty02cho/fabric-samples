@@ -55,15 +55,18 @@ services:
       - CORE_PEER_LOCALMSPID=Org1MSP
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/peer/
       - CORE_PEER_ADDRESS=peer0.org1.example.com:7051
-      # # the following setting starts chaincode containers on the same
-      # # bridge network as the peers
-      # # https://docs.docker.com/compose/networking/
+      # the following setting starts chaincode containers on the same
+      # bridge network as the peers
+      # (다음 설정은 피어와 동일한 브리지 네트워크에서 chaincode 컨테이너를 시작합니다.)
+      # https://docs.docker.com/compose/networking/
       - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=${COMPOSE_PROJECT_NAME}_basic
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb:5984
       # The CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME and CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD
       # provide the credentials for ledger to connect to CouchDB.  The username and password must
       # match the username and password set for the associated CouchDB.
+      # (CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME과 CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD는
+      # ledger가 CouchDB에 연결할 수있는 자격 증명을 제공합니다. 사용자 이름과 암호는 연관된 CouchDB에 설정된 사용자 이름과 암호와 일치해야합니다.)
       - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
       - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric
@@ -88,6 +91,8 @@ services:
     image: hyperledger/fabric-couchdb
     # Populate the COUCHDB_USER and COUCHDB_PASSWORD to set an admin user and password
     # for CouchDB.  This will prevent CouchDB from operating in an "Admin Party" mode.
+    # (COUCHDB_USER 및 COUCHDB_PASSWORD를 채워 CouchDB의 관리자 및 암호를 설정하십시오.
+    # 이렇게하면 CouchDB가 "Admin Party"모드에서 작동하지 않게됩니다.)
     environment:
       - COUCHDB_USER=
       - COUCHDB_PASSWORD=

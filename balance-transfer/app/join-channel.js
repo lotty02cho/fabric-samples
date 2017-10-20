@@ -29,10 +29,10 @@ var ORGS = helper.ORGS;
 var allEventhubs = [];
 
 //
-//Attempt to send a request to the orderer with the sendCreateChain method
+//Attempt to send a request to the orderer with the sendCreateChain method(sendCreateChain 메소드를 사용하여 순서 지정자에게 요청을 보내려고합니다.)
 //
 var joinChannel = function(channelName, peers, username, org) {
-	// on process exit, always disconnect the event hub
+	// on process exit, always disconnect the event hub(프로세스 종료시 항상 이벤트 허브의 연결을 끊으십시오.)
 	var closeConnections = function(isSuccess) {
 		if (isSuccess) {
 			logger.debug('\n============ Join Channel is SUCCESS ============\n');
@@ -87,8 +87,9 @@ var joinChannel = function(channelName, peers, username, org) {
 					clearTimeout(handle);
 					// in real-world situations, a peer may have more than one channels so
 					// we must check that this block came from the channel we asked the peer to join
+					// 실제 상황에서 피어는 둘 이상의 채널을 가질 수 있으므로 이 블록이 피어에게 참여하도록 요청한 채널에서 왔는지 확인해야합니다.
 					if (block.data.data.length === 1) {
-						// Config block must only contain one transaction
+						// Config block must only contain one transaction(구성 블록에는 하나의 트랜잭션만 포함되어야 합니다.)
 						var channel_header = block.data.data[0].payload.header.channel_header;
 						if (channel_header.channel_id === channelName) {
 							resolve();

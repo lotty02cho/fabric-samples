@@ -47,7 +47,7 @@ PeerOrgs:
     #
     #                 which obtains its values from the Spec.Hostname and
     #                 Org.Domain, respectively.
-    #                 (Spec.Hostname과 Org.Domain에서 해당 값을 각각 가져 오는 템플리트.)
+    #                 (Spec.Hostname과 Org.Domain에서 해당 값을 각각 가져 오는 템플릿.)
     # ---------------------------------------------------------------------------
     # Specs:
     #   - Hostname: foo # implicitly "foo.org1.example.com"

@@ -33,7 +33,7 @@ var clients = {};
 var channels = {};
 var caClients = {};
 
-// set up the client and channel objects for each org
+// set up the client and channel objects for each org(각 조직에 대한 클라이언트 및 채널 개체 설정합니다.)
 for (let key in ORGS) {
 	if (key.indexOf('org') === 0) {
 		let client = new hfc();
@@ -104,11 +104,11 @@ function newRemotes(names, forPeers, userOrg) {
 	let client = getClientForOrg(userOrg);
 
 	let targets = [];
-	// find the peer that match the names
+	// find the peer that match the names(이름과 일치하는 피어를 찾는다.)
 	for (let idx in names) {
 		let peerName = names[idx];
 		if (ORGS[userOrg].peers[peerName]) {
-			// found a peer matching the name
+			// found a peer matching the name(이름과 일치하는 피어를 찾았습니다.)
 			let data = fs.readFileSync(path.join(__dirname, ORGS[userOrg].peers[peerName]['tls_cacerts']));
 			let grpcOpts = {
 				pem: Buffer.from(data).toString(),
@@ -167,7 +167,7 @@ var getAdminUser = function(userOrg) {
 		path: getKeyStoreForOrg(getOrgName(userOrg))
 	}).then((store) => {
 		client.setStateStore(store);
-		// clearing the user context before switching
+		// clearing the user context before switching(전환하기 전에 사용자 컨텍스트를 지웁니다.)
 		client._userContext = null;
 		return client.getUserContext(username, true).then((user) => {
 			if (user && user.isEnrolled()) {
@@ -175,7 +175,7 @@ var getAdminUser = function(userOrg) {
 				return user;
 			} else {
 				let caClient = caClients[userOrg];
-				// need to enroll it with CA server
+				// need to enroll it with CA server(CA 서버에 등록해야합니다.)
 				return caClient.enroll({
 					enrollmentID: username,
 					enrollmentSecret: password
@@ -206,7 +206,7 @@ var getRegisteredUsers = function(username, userOrg, isJson) {
 		path: getKeyStoreForOrg(getOrgName(userOrg))
 	}).then((store) => {
 		client.setStateStore(store);
-		// clearing the user context before switching
+		// clearing the user context before switching(전환하기 전에 사용자 컨텍스트를 지웁니다.)
 		client._userContext = null;
 		return client.getUserContext(username, true).then((user) => {
 			if (user && user.isEnrolled()) {

@@ -10,7 +10,7 @@
 #
 #   - Different configuration profiles may be encoded here to be specified
 #   as parameters to the configtxgen tool
-#
+#   (다른 구성 프로파일이 configtxgen 도구에 대한 매개 변수로 지정되도록 여기 인코딩 될 수 있습니다.)
 ################################################################################
 Profiles:
 
@@ -34,33 +34,38 @@ Profiles:
 
 ################################################################################
 #
-#   Section: Organizations
+#   Section: Organizations(섹션 : 조직)
 #
 #   - This section defines the different organizational identities which will
 #   be referenced later in the configuration.
-#
+#   (이 섹션에서는 구성에서 나중에 참조 할 다양한 조직 ID를 정의합니다.)
 ################################################################################
 Organizations:
 
     # SampleOrg defines an MSP using the sampleconfig.  It should never be used
     # in production but may be used as a template for other definitions
+    # SampleOrg는 sampleconfig를 사용하여 MSP를 정의합니다.
+    # (프로덕션 환경에서는 절대 사용해서는 안되지만 다른 정의에 대한 템플릿으로 사용할 수도 있습니다.)
     - &OrdererOrg
         # DefaultOrg defines the organization which is used in the sampleconfig
         # of the fabric.git development environment
-        Name: OrdererMSP
+        # (DefaultOrg는 fabric.git 개발 환경의 sampleconfig에 사용되는 조직을 정의합니다.)
+        Name: OrdererOrg
 
-        # ID to load the MSP definition as
+        # ID to load the MSP definition as(MSP 정의를로드 할 ID)
         ID: OrdererMSP
 
         # MSPDir is the filesystem path which contains the MSP configuration
+        # (MSPDir은 MSP 구성을 포함하는 파일 시스템 경로입니다.)
         MSPDir: crypto-config/ordererOrganizations/example.com/msp
 
     - &Org1
         # DefaultOrg defines the organization which is used in the sampleconfig
         # of the fabric.git development environment
+        # (DefaultOrg는 fabric.git 개발 환경의 sampleconfig에 사용되는 조직을 정의합니다.)
         Name: Org1MSP
 
-        # ID to load the MSP definition as
+        # ID to load the MSP definition as(MSP 정의를로드 할 ID)
         ID: Org1MSP
 
         MSPDir: crypto-config/peerOrganizations/org1.example.com/msp
@@ -69,15 +74,18 @@ Organizations:
             # AnchorPeers defines the location of peers which can be used
             # for cross org gossip communication.  Note, this value is only
             # encoded in the genesis block in the Application section context
+            # (AnchorPeers는 조직 간 가십 커뮤니케이션에 사용할 수있는 피어의 위치를 정의합니다.
+            #  이 값은 응용 프로그램 섹션 컨텍스트의 기원 블록에서만 인코딩됩니다.)
             - Host: peer0.org1.example.com
               Port: 7051
 
     - &Org2
         # DefaultOrg defines the organization which is used in the sampleconfig
         # of the fabric.git development environment
+        # (DefaultOrg는 fabric.git 개발 환경의 sampleconfig에 사용되는 조직을 정의합니다.)
         Name: Org2MSP
 
-        # ID to load the MSP definition as
+        # ID to load the MSP definition as(MSP 정의를로드 할 ID)
         ID: Org2MSP
 
         MSPDir: crypto-config/peerOrganizations/org2.example.com/msp
@@ -86,64 +94,79 @@ Organizations:
             # AnchorPeers defines the location of peers which can be used
             # for cross org gossip communication.  Note, this value is only
             # encoded in the genesis block in the Application section context
+            # (AnchorPeers는 조직 간 가십 커뮤니케이션에 사용할 수있는 피어의 위치를 정의합니다.
+            #  이 값은 응용 프로그램 섹션 컨텍스트의 기원 블록에서만 인코딩됩니다.)
             - Host: peer0.org2.example.com
               Port: 7051
 
 ################################################################################
 #
-#   SECTION: Orderer
+#   SECTION: Orderer(섹선: 주문자)
 #
 #   - This section defines the values to encode into a config transaction or
 #   genesis block for orderer related parameters
+#   (이 섹션에서는 주문자 관련 매개 변수에 대한 설정 트랜잭션
+#    또는 구성 블록으로 인코딩 할 값을 정의합니다.)
 #
 ################################################################################
 Orderer: &OrdererDefaults
 
-    # Orderer Type: The orderer implementation to start
-    # Available types are "solo" and "kafka"
+    # Orderer Type: The orderer implementation to start(발주자 유형 : 시작하려는 발주자 구현)
+    # Available types are "solo" and "kafka"(사용 가능한 유형은 "solo"와 "kafka"입니다.)
     OrdererType: solo
 
     Addresses:
         - orderer.example.com:7050
 
     # Batch Timeout: The amount of time to wait before creating a batch
+    # (배치 시간 초과 : 배치를 만들기 전에 기다리는 시간)
     BatchTimeout: 2s
 
     # Batch Size: Controls the number of messages batched into a block
+    # (배치 크기 : 블록으로 배치되는 메시지 수를 제어합니다.)
     BatchSize:
 
         # Max Message Count: The maximum number of messages to permit in a batch
+        # (최대 메시지 수 : 일괄 처리에서 허용할 최대 메시지 수)
         MaxMessageCount: 10
 
         # Absolute Max Bytes: The absolute maximum number of bytes allowed for
         # the serialized messages in a batch.
-        AbsoluteMaxBytes: 98 MB
+        # (절대 최대 바이트 수 : 일괄 처리에서 직렬화 된 메시지에 허용되는 절대 최대 바이트 수입니다.)
+        AbsoluteMaxBytes: 99 MB
 
         # Preferred Max Bytes: The preferred maximum number of bytes allowed for
         # the serialized messages in a batch. A message larger than the preferred
         # max bytes will result in a batch larger than preferred max bytes.
+        # (Preferred Max Bytes : 일괄 처리에서 직렬화 된 메시지에 허용되는 최대 바이트 수입니다.
+        # 선호되는 최대 바이트보다 큰 메시지는 선호되는 최대 바이트보다 큰 배치가됩니다.)
         PreferredMaxBytes: 512 KB
 
     Kafka:
         # Brokers: A list of Kafka brokers to which the orderer connects
-        # NOTE: Use IP:port notation
+        # (중개인 : 발주자가 연결하는 카프카 중개인 목록)
+        # NOTE: Use IP:port notation(IP : port 표기법 사용)
         Brokers:
             - 127.0.0.1:9092
 
     # Organizations is the list of orgs which are defined as participants on
     # the orderer side of the network
+    # (조직은 네트워크의 주문자 측 참가자로 정의 된 조직의 목록입니다.)
     Organizations:
 
 ################################################################################
 #
-#   SECTION: Application
+#   SECTION: Application(섹션: 어플리케이션)
 #
 #   - This section defines the values to encode into a config transaction or
 #   genesis block for application related parameters
+#   (이 섹션에서는 응용 프로그램 관련 매개 변수에 대한 구성 트랜잭션 또는 구성 블록으로
+#    인코딩할 값을 정의합니다.)
 #
 ################################################################################
 Application: &ApplicationDefaults
 
     # Organizations is the list of orgs which are defined as participants on
     # the application side of the network
+    # (Organizations는 네트워크의 응용 프로그램 측에서 참가자로 정의 된 조직의 목록입니다.)
     Organizations:

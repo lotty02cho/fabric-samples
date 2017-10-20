@@ -8,4 +8,5 @@
 set -ev
 
 # Shut down the Docker containers that might be currently running.
+# (현재 실행중인 Docker 컨테이너를 종료하십시오.)
 docker-compose -f docker-compose.yml stop

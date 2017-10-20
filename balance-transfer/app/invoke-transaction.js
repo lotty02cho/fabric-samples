@@ -34,7 +34,7 @@ var invokeChaincode = function(peerNames, channelName, chaincodeName, fcn, args,
 	return helper.getRegisteredUsers(username, org).then((user) => {
 		tx_id = client.newTransactionID();
 		logger.debug(util.format('Sending transaction "%j"', tx_id));
-		// send proposal to endorser
+		// send proposal to endorser(endorser에게 제안서 보냅니다.)
 		var request = {
 			chaincodeId: chaincodeName,
 			fcn: fcn,
@@ -78,6 +78,8 @@ var invokeChaincode = function(peerNames, channelName, chaincodeName, fcn, args,
 			// set the transaction listener and set a timeout of 30sec
 			// if the transaction did not get committed within the timeout period,
 			// fail the test
+			// (트랜잭션 리스너를 설정하고 30 초의 타임 아웃을 설정합니다.
+			// 트랜잭션이 제한 시간 내에 완료되지 않으면 테스트는 실패하게 됩니다.)
 			var transactionID = tx_id.getTransactionID();
 			var eventPromises = [];
 
@@ -120,7 +122,7 @@ var invokeChaincode = function(peerNames, channelName, chaincodeName, fcn, args,
 			var sendPromise = channel.sendTransaction(request);
 			return Promise.all([sendPromise].concat(eventPromises)).then((results) => {
 				logger.debug(' event promise all complete and testing complete');
-				return results[0]; // the first returned value is from the 'sendPromise' which is from the 'sendTransaction()' call
+				return results[0]; // the first returned value is from the 'sendPromise' which is from the 'sendTransaction()' call((첫 번째 반환 값은 'sendTransaction ()'호출의 'sendPromise'에서 가져온 값입니다.)
 			}).catch((err) => {
 				logger.error(
 					'Failed to send transaction and get notifications within the timeout period.'
